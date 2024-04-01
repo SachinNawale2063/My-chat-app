@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react"
 import toast from "react-hot-toast";
+import { useAuthContext } from "../context/AutheContext";
 
 
 const useSignup = () => {
   const [loading, setLoading] = useState(false);
+  const{setAuthUser} = useAuthContext();
 
   const signup = async ({fullname,  username, password, confirmPassword, gender}) =>{
     const success = handleInputErrors({fullname,  username, password, confirmPassword, gender})
@@ -25,7 +27,10 @@ const useSignup = () => {
         }
 
         //localstorage
+
+        localStorage.setItem("chat-user", JSON.stringify(data))
         //context
+        setAuthUser(data)
 
         // console.log(data);
     } catch (error) {
